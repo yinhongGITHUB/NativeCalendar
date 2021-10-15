@@ -62,7 +62,7 @@ function showTools() {
     let str = toolLeftOBJ.innerHTML;
     if (str[str.length - 1] === "月") { // 说明这里是选月的导航
       toolLeftOBJ.innerHTML = yy + "年";
-      document.getElementsByClassName("content")[0].style.display = "none"
+      document.getElementsByClassName("slideHeight")[0].style.display = "none"
       showNav('月');
     } else if (str[str.length - 1] === "年") { // 说明这里是选年的导航
       toolLeftOBJ.innerHTML =
@@ -258,7 +258,8 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
   let nav = document.getElementsByClassName("nav")[0];
   nav.tBodies[0].innerHTML = "";
   nav.style.display = ''
-  document.getElementsByClassName("content")[0].style.display = "none"
+  let cnt = document.getElementsByClassName("content")[0]
+  cnt.style.display = "none"
   // windows日历固定四行
   let rows = 4;
   // windows日历固定四列
@@ -321,7 +322,8 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
           toolLeftOBJ.innerHTML = yy + "年" + mo + "月";
           nav.style.display = 'none'
           // 显示日期而且得把里面存在的tbody移除掉
-          document.getElementsByClassName("content")[0].style.display = ""
+          document.getElementsByClassName("slideHeight")[0].style.display = ""
+          cnt.style.display = ""
           removeTbody()
           showContent(yy, mo);
         }
