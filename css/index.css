@@ -50,6 +50,9 @@ body{
 table{
     /* border-bottom: 1px solid rgb(82, 82, 82); */
 }
+.content{
+    height: 30px;
+}
 /* 当某一天被选中是触发的样式 */
 .selected{
     border: 2px solid rgb(0, 120, 215);
@@ -95,7 +98,7 @@ td > span{
 /* navigation区域 */
 .navCls{
     width: 89px;
-    height: 89px;
+    height: 74px;
 }
 .currentCls{
     background: rgb(0, 120, 215);

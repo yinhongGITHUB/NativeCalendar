@@ -41,9 +41,8 @@ function showTitle() {
     let str = e.target.innerHTML
     yy = Number(str.substr(0, 4))
     mo = Number(str.substr(5, 2))
-    showTools()
+    showContent(yy, mo); 
     removeTbody()
-    showContent(yy, mo);
   }
   setTimeout("showTitle()", 1000);
 }
@@ -146,6 +145,7 @@ function showContent(y, m, order) {
   showTools();
   // 每次日历更新，都是新建一个tbody
   let cnt = document.createElement("tbody");
+  cnt.id = 'cnt'
   cnt.style.display = ""
   document.getElementsByClassName("nav")[0].style.display = 'none'
   //根据当前需要显示的年和月来创建日历
@@ -338,9 +338,10 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
 // 移除上一个tbody
 function removeTbody(order) {
   let cnt = document.getElementsByTagName('tbody')
+  if (cnt.length < 4) return;// 始终保持有三个tbody
   if (order) {
-    cnt[cnt.length - 1].remove()
+    cnt[cnt.length - 2].remove()// 是因为下面的nav区域还有个tbody，不要动人家的子元素，删除自己的就好了
   } else {
-    cnt.length > 3 ? cnt[0].remove() : ''
+    cnt[0].remove()
   }
 }
