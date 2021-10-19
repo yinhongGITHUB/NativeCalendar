@@ -7,6 +7,11 @@ let navMo = mo,
   navYy = yy
 let bottomUp = 0,
   count = 0
+// 选日期的时候  *******  用于获取slideshow的tbody对象
+let slideshowObj = document.getElementsByClassName('slideshow')[0]
+// 选月份的时候  *******  用于获取nav下的tbody对象
+let navObj = document.getElementsByClassName('nav')[0]
+let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
 // 展示title区域
 function showTitle() {
   let today = new Date();
@@ -41,8 +46,8 @@ function showTitle() {
     let str = e.target.innerHTML
     yy = Number(str.substr(0, 4))
     mo = Number(str.substr(5, 2))
-    showContent(yy, mo); 
-    removeTbody()
+    showContent(yy, mo, '');
+    removeTbody('', slideshowObj.childNodes)
   }
   setTimeout("showTitle()", 1000);
 }
@@ -51,7 +56,7 @@ showTitle();
 // 展示tools区域
 function showTools() {
   // 获取tools的各个对象
-  let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
+
   let toolRight1OBJ = document.getElementsByClassName("toolRight1")[0];
   let toolRight2OBJ = document.getElementsByClassName("toolRight2")[0];
   //   tools左侧初始化
@@ -72,6 +77,7 @@ function showTools() {
 
   // 绑定点击事件
   let slideObj = document.getElementsByClassName('slideshow')[0]
+  let navShowObj = document.getElementsByClassName('navshow')[0]
   toolRight1OBJ.onclick = function () {
     let str = toolLeftOBJ.innerHTML;
     // 这里我要判断当前是选日还是选月还是选年
@@ -83,7 +89,7 @@ function showTools() {
         yy -= 1;
       }
       showContent(yy, mo, 'up');
-      removeTbody('up')
+      removeTbody('up', slideshowObj.childNodes)
       bottomUp = 0
       let TimeID = setInterval(() => {
         bottomUp -= 2
@@ -95,12 +101,28 @@ function showTools() {
         }
       }, 1);
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
-
+      yy -= 1;
+      var newArr = []
+      for(let i=0;i<navShowObj.childNodes.length;i++){
+        newArr.push(navShowObj.childNodes[i].id)
+      }
+      toolLeftOBJ.innerHTML = yy + "年";
+      if(!newArr.includes(String(yy))) showNav('月', 'up')
+      removeTbody('up', navShowObj.childNodes)
+      bottomUp = 0
+      let TimeID = setInterval(() => {
+        bottomUp -= 2
+        count += 2
+        navShowObj.style.bottom = bottomUp + 'px'
+        if (count > 276) {
+          clearInterval(TimeID)
+          count = 0
+        }
+      }, 1);
     } else { // 说明这里是选年的
       yy -= 8
       showNav('年')
     }
-
   };
   toolRight2OBJ.onclick = function () {
     let str = toolLeftOBJ.innerHTML;
@@ -112,8 +134,8 @@ function showTools() {
         mo = 1;
         yy += 1;
       }
-      showContent(yy, mo);
-      removeTbody()
+      showContent(yy, mo, 'down');
+      removeTbody('down', slideshowObj.childNodes)
       bottomUp = -278
       let TimeID = setInterval(() => {
         bottomUp += 2
@@ -123,10 +145,26 @@ function showTools() {
           clearInterval(TimeID)
           count = 0
         }
-
       }, 1);
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
-
+      yy += 1
+      var newArr = []
+      for(let i=0;i<navShowObj.childNodes.length;i++){
+        newArr.push(navShowObj.childNodes[i].id)
+      }
+      toolLeftOBJ.innerHTML = yy + "年";
+      if(!newArr.includes(String(yy))) showNav('月', 'down')
+      removeTbody('down', navShowObj.childNodes)
+      bottomUp = -278
+      let TimeID = setInterval(() => {
+        bottomUp += 2
+        count += 2
+        navShowObj.style.bottom = bottomUp + 'px'
+        if (count > 276) {
+          clearInterval(TimeID)
+          count = 0
+        }
+      }, 1);
     } else { // 说明这里是选年的
       yy += 8
       showNav('年')
@@ -147,7 +185,7 @@ function showContent(y, m, order) {
   let cnt = document.createElement("tbody");
   cnt.id = 'cnt'
   cnt.style.display = ""
-  document.getElementsByClassName("nav")[0].style.display = 'none'
+  navObj.style.display = 'none'
   //根据当前需要显示的年和月来创建日历
   //创建一个要显示的年月的下一个的日期对象
   var date1 = new Date(y, m, 1, 0, 0, 0);
@@ -239,7 +277,6 @@ function showContent(y, m, order) {
 
     cnt.appendChild(tr);
   }
-  let slideshowObj = document.getElementsByClassName('slideshow')[0]
   if (order === 'up') {
     let tbodyObj = document.getElementsByTagName('tbody')[0]
     slideshowObj.insertBefore(cnt, tbodyObj)
@@ -248,40 +285,43 @@ function showContent(y, m, order) {
   }
 
 }
-showContent(yy, mo);
-
-
+showContent(yy, mo, '');
 
 
 // 展示navigation区域
-function showNav(flag) { // 如果flag存在，说明现在应该显示年了
-  let nav = document.getElementsByClassName("nav")[0];
-  nav.tBodies[0].innerHTML = "";
-  nav.style.display = ''
+/**
+ * 
+ * @param {String} flag flag有'年' '月'两个选择，分别对应不同的代码逻辑
+ * @param {String} currentYear 判断是不是当前的年
+ */
+function showNav(flag, order,init) {
+  navObj.style.display = ''
   let cnt = document.getElementsByClassName("content")[0]
+  let navshow = document.getElementsByClassName("navshow")[0]
   cnt.style.display = "none"
   // windows日历固定四行
   let rows = 4;
   // windows日历固定四列
   let cells = 4;
+  let tbody = document.createElement('tbody')
   for (let i = 0; i < rows; i++) {
     let tr = document.createElement("tr");
     for (let j = 0; j < cells; j++) {
       let td = document.createElement("td");
       let year = Number((yy + "").substr(0, 3) + (i === 0 ? '0' : i === 1 ? j + 1 : i === 2 ? j + 5 : i === 3 ? 9 : ''))
 
-      if (flag === '月') {
+      if (flag === '月') { // 说明当前是选月
         if (j + i * 4 + 1 > 12) {
           td.innerHTML = j + i * 4 + 1 - 12 + "月";
           td.className = "gray";
         } else if (j + i * 4 + 1 === navMo && yy == navYy) {
           // 当前月给样式
           td.innerHTML = j + i * 4 + 1 + "月";
-          td.className = "currentCls";
+          td.className = " currentCls";
         } else {
           td.innerHTML = j + i * 4 + 1 + "月";
         }
-      } else if (flag === '年') {
+      } else if (flag === '年') { // 说明当前是选年
         if (i === 0 && j < 3) { // 开头灰色的年
           td.innerHTML = year + j - 3
           td.className = "gray";
@@ -295,7 +335,6 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
           td.innerHTML = year
         }
       }
-
       td.className += " navCls";
       td.onmousemove = function (e) { // 鼠标进入时加边框
         e.target.className += " moveBoder"
@@ -305,8 +344,6 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
         e.target.className = cls.substr(0, cls.indexOf(' moveBoder'))
       }
       td.onclick = function (e) { // 鼠标点击当前导航
-        let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
-        let nav = document.getElementsByClassName("nav")[0];
         let navTitle = e.target.innerHTML // 当前点击导航的文本  也就是  是几月是几几年
         let len = navTitle.length
         if (len === 4) { // 说明当前点的是年
@@ -320,28 +357,42 @@ function showNav(flag) { // 如果flag存在，说明现在应该显示年了
           showNav('月')
         } else if (flag === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
           toolLeftOBJ.innerHTML = yy + "年" + mo + "月";
-          nav.style.display = 'none'
+          navObj.style.display = 'none'
           // 显示日期而且得把里面存在的tbody移除掉
           document.getElementsByClassName("slideHeight")[0].style.display = ""
           cnt.style.display = ""
-          removeTbody()
-          showContent(yy, mo);
+          showContent(yy, mo, '');
         }
-
       }
       tr.appendChild(td);
     }
-    nav.tBodies[0].appendChild(tr);
+    tbody.id = yy
+    tbody.appendChild(tr);
+  }
+  navshow.append(tbody)
+  if (order === 'up') {
+    let tbodyObj = navshow.getElementsByTagName('tbody')[0]
+    navshow.insertBefore(tbody, tbodyObj)
+  } else {
+    navshow.append(tbody)
   }
 }
 
 // 移除上一个tbody
-function removeTbody(order) {
-  let cnt = document.getElementsByTagName('tbody')
-  if (cnt.length < 4) return;// 始终保持有三个tbody
-  if (order) {
-    cnt[cnt.length - 2].remove()// 是因为下面的nav区域还有个tbody，不要动人家的子元素，删除自己的就好了
+/**
+ * 
+ * @param {String} order 判断向上还是向下的标识字符
+ * @param {Array} tbodys tbodys数组
+ * @returns 
+ * 
+ * 这里的* order *只做了up区分，是因为当* order *为down或''时都是走的同一个代码逻辑
+ */
+function removeTbody(order, tbodys) {
+  console.log("当前有多少", tbodys);
+  if (tbodys.length < 3) return; // 始终保持有两个tbody
+  if (order === 'up') {
+    tbodys[tbodys.length - 1].remove() // 是因为下面的nav区域还有个tbody，不要动人家的子元素，删除自己的就好了
   } else {
-    cnt[0].remove()
+    tbodys[0].remove()
   }
 }

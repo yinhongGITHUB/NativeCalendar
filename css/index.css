@@ -106,8 +106,14 @@ td > span{
 .moveBoder:hover{
     border: 1px solid rgb(223, 223, 223);
 }
-
-
+.nav{
+    height: 302px;
+    overflow: hidden;
+    position: relative;
+}
+.navshow{
+    position: absolute;
+}
 
 
 
