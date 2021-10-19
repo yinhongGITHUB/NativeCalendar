@@ -10,8 +10,12 @@ let bottomUp = 0,
 // 选日期的时候  *******  用于获取slideshow的tbody对象
 let slideshowObj = document.getElementsByClassName('slideshow')[0]
 // 选月份的时候  *******  用于获取nav下的tbody对象
+let navShowObj = document.getElementsByClassName('navshow')[0]
+// 控制导航栏是否显示
 let navObj = document.getElementsByClassName('nav')[0]
+// 工具栏左侧的的日期对象
 let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
+
 // 展示title区域
 function showTitle() {
   let today = new Date();
@@ -46,6 +50,7 @@ function showTitle() {
     let str = e.target.innerHTML
     yy = Number(str.substr(0, 4))
     mo = Number(str.substr(5, 2))
+    cutContent()
     showContent(yy, mo, '');
     removeTbody('', slideshowObj.childNodes)
   }
@@ -67,17 +72,17 @@ function showTools() {
     if (str[str.length - 1] === "月") { // 说明这里是选月的导航
       toolLeftOBJ.innerHTML = yy + "年";
       document.getElementsByClassName("slideHeight")[0].style.display = "none"
+      removeNav()
       showNav('月');
     } else if (str[str.length - 1] === "年") { // 说明这里是选年的导航
       toolLeftOBJ.innerHTML =
         (yy + "").substr(0, 3) + 0 + "-" + (yy + "").substr(0, 3) + 9;
+      removeNav()
       showNav('年');
     }
   };
 
   // 绑定点击事件
-  let slideObj = document.getElementsByClassName('slideshow')[0]
-  let navShowObj = document.getElementsByClassName('navshow')[0]
   toolRight1OBJ.onclick = function () {
     let str = toolLeftOBJ.innerHTML;
     // 这里我要判断当前是选日还是选月还是选年
@@ -88,26 +93,16 @@ function showTools() {
         mo = 12;
         yy -= 1;
       }
-      showContent(yy, mo, 'up');
-      removeTbody('up', slideshowObj.childNodes)
-      bottomUp = 0
-      let TimeID = setInterval(() => {
-        bottomUp -= 2
-        count += 2
-        slideObj.style.bottom = bottomUp + 'px'
-        if (count > 276) {
-          clearInterval(TimeID)
-          count = 0
-        }
-      }, 1);
+      carouselAnimation('up', showContent, 'cnt')
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
       yy -= 1;
+      // carouselAnimation('up', showNav, 'nav')
       var newArr = []
-      for(let i=0;i<navShowObj.childNodes.length;i++){
+      for (let i = 0; i < navShowObj.childNodes.length; i++) {
         newArr.push(navShowObj.childNodes[i].id)
       }
       toolLeftOBJ.innerHTML = yy + "年";
-      if(!newArr.includes(String(yy))) showNav('月', 'up')
+      if (!newArr.includes(String(yy))) showNav('月', 'up')
       removeTbody('up', navShowObj.childNodes)
       bottomUp = 0
       let TimeID = setInterval(() => {
@@ -121,7 +116,23 @@ function showTools() {
       }, 1);
     } else { // 说明这里是选年的
       yy -= 8
-      showNav('年')
+      var newArr = []
+      for (let i = 0; i < navShowObj.childNodes.length; i++) {
+        newArr.push(navShowObj.childNodes[i].id)
+      }
+      toolLeftOBJ.innerHTML = yy + "年";
+      if (!newArr.includes(String(yy))) showNav('月', 'up')
+      removeTbody('up', navShowObj.childNodes)
+      bottomUp = 0
+      let TimeID = setInterval(() => {
+        bottomUp -= 2
+        count += 2
+        navShowObj.style.bottom = bottomUp + 'px'
+        if (count > 276) {
+          clearInterval(TimeID)
+          count = 0
+        }
+      }, 1);
     }
   };
   toolRight2OBJ.onclick = function () {
@@ -134,13 +145,18 @@ function showTools() {
         mo = 1;
         yy += 1;
       }
-      showContent(yy, mo, 'down');
+      var newArr = []
+      for (let i = 0; i < navShowObj.childNodes.length; i++) {
+        newArr.push(navShowObj.childNodes[i].id)
+      }
+      toolLeftOBJ.innerHTML = yy + "年";
+      if (!newArr.includes(String(yy))) showContent(yy, mo, 'down');
       removeTbody('down', slideshowObj.childNodes)
       bottomUp = -278
       let TimeID = setInterval(() => {
         bottomUp += 2
         count += 2
-        slideObj.style.bottom = bottomUp + 'px'
+        slideshowObj.style.bottom = bottomUp + 'px'
         if (count > 276) {
           clearInterval(TimeID)
           count = 0
@@ -149,11 +165,11 @@ function showTools() {
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
       yy += 1
       var newArr = []
-      for(let i=0;i<navShowObj.childNodes.length;i++){
+      for (let i = 0; i < navShowObj.childNodes.length; i++) {
         newArr.push(navShowObj.childNodes[i].id)
       }
       toolLeftOBJ.innerHTML = yy + "年";
-      if(!newArr.includes(String(yy))) showNav('月', 'down')
+      if (!newArr.includes(String(yy))) showNav('月', 'down')
       removeTbody('down', navShowObj.childNodes)
       bottomUp = -278
       let TimeID = setInterval(() => {
@@ -167,7 +183,23 @@ function showTools() {
       }, 1);
     } else { // 说明这里是选年的
       yy += 8
-      showNav('年')
+      var newArr = []
+      for (let i = 0; i < navShowObj.childNodes.length; i++) {
+        newArr.push(navShowObj.childNodes[i].id)
+      }
+      toolLeftOBJ.innerHTML = yy + "年";
+      if (!newArr.includes(String(yy))) showNav('月', 'down')
+      removeTbody('down', navShowObj.childNodes)
+      bottomUp = -278
+      let TimeID = setInterval(() => {
+        bottomUp += 2
+        count += 2
+        navShowObj.style.bottom = bottomUp + 'px'
+        if (count > 276) {
+          clearInterval(TimeID)
+          count = 0
+        }
+      }, 1);
     }
 
   };
@@ -294,7 +326,7 @@ showContent(yy, mo, '');
  * @param {String} flag flag有'年' '月'两个选择，分别对应不同的代码逻辑
  * @param {String} currentYear 判断是不是当前的年
  */
-function showNav(flag, order,init) {
+function showNav(flag, order) {
   navObj.style.display = ''
   let cnt = document.getElementsByClassName("content")[0]
   let navshow = document.getElementsByClassName("navshow")[0]
@@ -352,10 +384,11 @@ function showNav(flag, order,init) {
           mo = Number(navTitle.substr(0, len - 1))
         }
         toolLeftOBJ.innerHTML = navTitle + (len === 4 ? '年' : '')
-        let flag = len === 4 ? '年' : '月'
-        if (flag === '年') { // 如果当前点击的导航的文本显示的是年，那就应该显示月的导航了
+        let content = len === 4 ? '年' : '月'
+        if (content === '年') { // 如果当前点击的导航的文本显示的是年，那就应该显示月的导航了
+          document.getElementsByClassName("navshow")[0].childNodes[0]?.remove()
           showNav('月')
-        } else if (flag === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
+        } else if (content === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
           toolLeftOBJ.innerHTML = yy + "年" + mo + "月";
           navObj.style.display = 'none'
           // 显示日期而且得把里面存在的tbody移除掉
@@ -395,4 +428,52 @@ function removeTbody(order, tbodys) {
   } else {
     tbodys[0].remove()
   }
+}
+/**
+ * 切换到content页面
+ */
+function cutContent() {
+  let sh = document.getElementsByClassName("slideHeight")[0]
+  let cnt = document.getElementsByClassName("content")[0]
+  cnt.style.display = ""
+  sh.style.display = ""
+}
+/**
+ * 点击工具栏左侧事，移除上一个nav
+ */
+function removeNav() {
+  document.getElementsByClassName("navshow")[0].childNodes[0]?.remove()
+}
+
+
+function carouselAnimation(params, fn, flag) {
+  var newArr = []
+  for (let i = 0; i < navShowObj.childNodes.length; i++) {
+    newArr.push(navShowObj.childNodes[i].id)
+  }
+  toolLeftOBJ.innerHTML = yy + "年";
+  if (!newArr.includes(String(yy))) {
+    switch (flag) {
+      case 'cnt':
+        fn(yy, mo, params)
+        break;
+      case 'nav':
+        showNav('月', params)
+        break;
+      default:
+        break;
+    }
+
+  }
+  removeTbody('up', slideshowObj.childNodes)
+  bottomUp = 0
+  let TimeID = setInterval(() => {
+    bottomUp -= 2
+    count += 2
+    slideshowObj.style.bottom = bottomUp + 'px'
+    if (count > 276) {
+      clearInterval(TimeID)
+      count = 0
+    }
+  }, 1);
 }
