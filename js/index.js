@@ -93,9 +93,10 @@ function showTools() {
         mo = 12;
         yy -= 1;
       }
-      carouselAnimation('up', showContent, 'cnt')
+      carouselAnimation('up', 'cnt')
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
       yy -= 1;
+      console.log("选月了");
       // carouselAnimation('up', showNav, 'nav')
       var newArr = []
       for (let i = 0; i < navShowObj.childNodes.length; i++) {
@@ -109,26 +110,27 @@ function showTools() {
         bottomUp -= 2
         count += 2
         navShowObj.style.bottom = bottomUp + 'px'
-        if (count > 276) {
+        if (count > 304) {
           clearInterval(TimeID)
           count = 0
         }
       }, 1);
     } else { // 说明这里是选年的
       yy -= 8
+      console.log("选年了");
       var newArr = []
       for (let i = 0; i < navShowObj.childNodes.length; i++) {
         newArr.push(navShowObj.childNodes[i].id)
       }
-      toolLeftOBJ.innerHTML = yy + "年";
-      if (!newArr.includes(String(yy))) showNav('月', 'up')
+      toolLeftOBJ.innerHTML = (yy + "").substr(0, 3) + 0 + "-" + (yy + "").substr(0, 3) + 9;
+      if (!newArr.includes(String(yy))) showNav('年', 'up')
       removeTbody('up', navShowObj.childNodes)
       bottomUp = 0
       let TimeID = setInterval(() => {
         bottomUp -= 2
         count += 2
         navShowObj.style.bottom = bottomUp + 'px'
-        if (count > 276) {
+        if (count > 304) {
           clearInterval(TimeID)
           count = 0
         }
@@ -164,38 +166,41 @@ function showTools() {
       }, 1);
     } else if (str[str.length - 1] === "年") { // 说明这里是选月的
       yy += 1
+      console.log("选月了");
       var newArr = []
       for (let i = 0; i < navShowObj.childNodes.length; i++) {
         newArr.push(navShowObj.childNodes[i].id)
       }
       toolLeftOBJ.innerHTML = yy + "年";
+
       if (!newArr.includes(String(yy))) showNav('月', 'down')
       removeTbody('down', navShowObj.childNodes)
-      bottomUp = -278
+      bottomUp = -304
       let TimeID = setInterval(() => {
         bottomUp += 2
         count += 2
         navShowObj.style.bottom = bottomUp + 'px'
-        if (count > 276) {
+        if (count > 304) {
           clearInterval(TimeID)
           count = 0
         }
       }, 1);
     } else { // 说明这里是选年的
       yy += 8
+      console.log("选年了");
       var newArr = []
       for (let i = 0; i < navShowObj.childNodes.length; i++) {
         newArr.push(navShowObj.childNodes[i].id)
       }
-      toolLeftOBJ.innerHTML = yy + "年";
-      if (!newArr.includes(String(yy))) showNav('月', 'down')
+      toolLeftOBJ.innerHTML = (yy + "").substr(0, 3) + 0 + "-" + (yy + "").substr(0, 3) + 9;
+      if (!newArr.includes(String(yy))) showNav('年', 'down')
       removeTbody('down', navShowObj.childNodes)
-      bottomUp = -278
+      bottomUp = -304
       let TimeID = setInterval(() => {
         bottomUp += 2
         count += 2
         navShowObj.style.bottom = bottomUp + 'px'
-        if (count > 276) {
+        if (count > 304) {
           clearInterval(TimeID)
           count = 0
         }
@@ -341,7 +346,6 @@ function showNav(flag, order) {
     for (let j = 0; j < cells; j++) {
       let td = document.createElement("td");
       let year = Number((yy + "").substr(0, 3) + (i === 0 ? '0' : i === 1 ? j + 1 : i === 2 ? j + 5 : i === 3 ? 9 : ''))
-
       if (flag === '月') { // 说明当前是选月
         if (j + i * 4 + 1 > 12) {
           td.innerHTML = j + i * 4 + 1 - 12 + "月";
@@ -399,7 +403,7 @@ function showNav(flag, order) {
       }
       tr.appendChild(td);
     }
-    tbody.id = yy
+    tbody.id = toolLeftOBJ.innerHTML
     tbody.appendChild(tr);
   }
   navshow.append(tbody)
@@ -421,7 +425,6 @@ function showNav(flag, order) {
  * 这里的* order *只做了up区分，是因为当* order *为down或''时都是走的同一个代码逻辑
  */
 function removeTbody(order, tbodys) {
-  console.log("当前有多少", tbodys);
   if (tbodys.length < 3) return; // 始终保持有两个tbody
   if (order === 'up') {
     tbodys[tbodys.length - 1].remove() // 是因为下面的nav区域还有个tbody，不要动人家的子元素，删除自己的就好了
@@ -446,7 +449,7 @@ function removeNav() {
 }
 
 
-function carouselAnimation(params, fn, flag) {
+function carouselAnimation(params, flag) {
   var newArr = []
   for (let i = 0; i < navShowObj.childNodes.length; i++) {
     newArr.push(navShowObj.childNodes[i].id)
@@ -455,7 +458,7 @@ function carouselAnimation(params, fn, flag) {
   if (!newArr.includes(String(yy))) {
     switch (flag) {
       case 'cnt':
-        fn(yy, mo, params)
+        showContent(yy, mo, params)
         break;
       case 'nav':
         showNav('月', params)
@@ -477,3 +480,29 @@ function carouselAnimation(params, fn, flag) {
     }
   }, 1);
 }
+
+// 日历支持拖动
+function dragCalendar() {
+  let box = document.getElementById('box')
+  box.onmousedown=function(e1){
+    console.log(e1);
+    let mouseX = e1.clientX - box.offsetLeft
+    let mouseY = e1.clientY - box.offsetTop
+    console.log(mouseX,mouseY);
+    document.onmousemove=function(e){
+      console.log("d",e.clientX,e.clientY);
+      box.style.left=e.clientX-mouseX+"px";
+      box.style.top=e.clientY-mouseY+"px";
+      console.log("查看数据", box.style.left,box.style.top);
+    }
+    document.onmouseup=function(){
+        document.onmousemove=null;
+        document.onmouseup=null;
+    }
+}
+box.onmouseup=function(){
+  box.onmousemove=null;
+  box.onmouseup=null;
+}
+}
+dragCalendar()
