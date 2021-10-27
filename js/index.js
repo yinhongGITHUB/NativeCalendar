@@ -7,6 +7,8 @@ let navMo = mo,
   navYy = yy
 let bottomUp = 0,
   count = 0
+// 节流函数的上一个时间戳
+let lastTimestamp = null
 // 选日期的时候  *******  用于获取slideshow的tbody对象
 let slideshowObj = document.getElementsByClassName('slideshow')[0]
 // 选月份的时候  *******  用于获取nav下的tbody对象
@@ -17,7 +19,11 @@ let navObj = document.getElementsByClassName('nav')[0]
 let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
 
 // 日历初始化函数
-function init(drag) {
+/**
+ * 
+ * @param {Boolean} drag 判断是否开启拖拽 true为开启 flase为关闭
+ */
+function init(drag = true) {
   showTitle();
   showTools();
   showContent(yy, mo, '');
@@ -66,11 +72,9 @@ function showTitle() {
   setTimeout("showTitle()", 1000);
 }
 
-
 // 展示tools区域
 function showTools() {
   // 获取tools的各个对象
-
   let toolRight1OBJ = document.getElementsByClassName("toolRight1")[0];
   let toolRight2OBJ = document.getElementsByClassName("toolRight2")[0];
   //   tools左侧初始化
@@ -165,8 +169,13 @@ function showTools() {
 
 }
 
-
 // 展示content区域
+/**
+ * 
+ * @param {Number} y 需要渲染的年
+ * @param {Number} m 需要渲染的月
+ * @param {String} order 向上渲染还是向下渲染
+ */
 function showContent(y, m, order) {
   // 每次进来，根据传入的年月，生成对应的工具栏
   yy = y
@@ -277,11 +286,8 @@ function showContent(y, m, order) {
 
 }
 
-
-
-// 展示navigation区域
 /**
- * 
+ * 展示navigation区域
  * @param {String} flag flag有'年' '月'两个选择，分别对应不同的代码逻辑
  * @param {String} currentYear 判断是不是当前的年
  */
@@ -370,9 +376,8 @@ function showNav(flag, order) {
   }
 }
 
-// 移除上一个tbody
 /**
- * 
+ * 移除上一个tbody
  * @param {String} order 判断向上还是向下的标识字符
  * @param {Array} tbodys tbodys数组
  * @returns 
@@ -387,6 +392,7 @@ function removeTbody(order, tbodys) {
     tbodys[0].remove()
   }
 }
+
 /**
  * 切换到content页面
  */
@@ -396,15 +402,19 @@ function cutContent() {
   cnt.style.display = ""
   sh.style.display = ""
 }
+
 /**
  * 点击工具栏左侧事，移除上一个nav
  */
 function removeNav() {
   navShowObj.innerHTML = ''
-
 }
 
-// 上下滚动动画函数
+/**
+ * 上下轮播动画函数
+ * @param {String} flag 判断此时是选年（navYear）还是选月（navMonth）还是选日（cnt）
+ * @param {Object} params 
+ */
 function carouselAnimation(flag, params) {
   let newArr = [],
     year = (yy + "").substr(0, 3) + 0 + "-" + (yy + "").substr(0, 3) + 9;
@@ -470,13 +480,11 @@ function dragCalendar() {
   }
 }
 
-let lastTimestamp = null
 /**
- * 
- * @param {Number} time 时间戳
+ * 节流函数
+ * @param {Number} time 时间差 单位/毫秒
  * @returns 
  */
-// 节流函数
 function throttle(time) {
   let nowTimestamp = new Date().getTime()
   if (!lastTimestamp) { // 说明第一次进来
