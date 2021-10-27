@@ -81,7 +81,6 @@ function showTools() {
     if (str[str.length - 1] === "月") { // 说明这里是选月的导航
       toolLeftOBJ.innerHTML = yy + "年";
       document.getElementsByClassName("slideHeight")[0].style.display = "none"
-      removeNav()
       showNav('月');
     } else if (str[str.length - 1] === "年") { // 说明这里是选年的导航
       toolLeftOBJ.innerHTML =
@@ -118,8 +117,8 @@ function showTools() {
         'time': 304
       })
     } else { // 说明这里是选年的
+      console.log("这里是选年的");
       yy -= 8
-      console.log("选年了");
       carouselAnimation('navYear', {
         'action': 'up',
         'bottomUp': 0,
@@ -127,6 +126,7 @@ function showTools() {
         'time': 304
       })
     }
+    console.log('年',yy);
   };
   toolRight2OBJ.onclick = function () {
     if (!throttle(1000)) return;
@@ -155,7 +155,6 @@ function showTools() {
       })
     } else { // 说明这里是选年的
       yy += 8
-      console.log("选年了");
       carouselAnimation('navYear', {
         'action': 'down',
         'bottomUp': -304,
@@ -293,6 +292,7 @@ function showNav(flag, order) {
   let cnt = document.getElementsByClassName("content")[0]
   let navshow = document.getElementsByClassName("navshow")[0]
   cnt.style.display = "none"
+  navShowObj.style.bottom = 0 + 'px'
   // windows日历固定四行
   let rows = 4;
   // windows日历固定四列
@@ -337,7 +337,6 @@ function showNav(flag, order) {
         e.target.className = cls.substr(0, cls.indexOf(' moveBoder'))
       }
       td.onclick = function (e) { // 鼠标点击当前导航
-        console.log("哈哈哈撒的");
         let navTitle = e.target.innerHTML // 当前点击导航的文本  也就是  是几月是几几年
         let len = navTitle.length
         if (len === 4) { // 说明当前点的是年
@@ -403,7 +402,9 @@ function cutContent() {
  * 点击工具栏左侧事，移除上一个nav
  */
 function removeNav() {
-  document.getElementsByClassName("navshow")[0].childNodes[0]?.remove()
+  console.log("进来了");
+  navShowObj.innerHTML = ''
+
 }
 
 // 上下滚动动画函数
@@ -413,13 +414,12 @@ function carouselAnimation(flag, params) {
   for (let i = 0; i < params.showObj.childNodes.length; i++) {
     newArr.push(params.showObj.childNodes[i].id)
   }
-  console.log('查看数据', year);
-  if (flag==='navMonth') {
+  if (flag === 'navMonth') {
     toolLeftOBJ.innerHTML = yy + "年";
-  } else if(flag==='navYear'){
+  } else if (flag === 'navYear') {
     toolLeftOBJ.innerHTML = year;
   }
-  if ((!newArr.includes(String(year)) && !newArr.includes(String(yy))) || flag === 'cnt') {
+  if ( !newArr.includes(String(yy)) || flag === 'cnt') {
     switch (flag) {
       case 'cnt':
         showContent(yy, mo, params.action)
