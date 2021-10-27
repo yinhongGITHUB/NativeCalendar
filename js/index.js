@@ -117,7 +117,6 @@ function showTools() {
         'time': 304
       })
     } else { // 说明这里是选年的
-      console.log("这里是选年的");
       yy -= 8
       carouselAnimation('navYear', {
         'action': 'up',
@@ -126,7 +125,6 @@ function showTools() {
         'time': 304
       })
     }
-    console.log('年',yy);
   };
   toolRight2OBJ.onclick = function () {
     if (!throttle(1000)) return;
@@ -402,7 +400,6 @@ function cutContent() {
  * 点击工具栏左侧事，移除上一个nav
  */
 function removeNav() {
-  console.log("进来了");
   navShowObj.innerHTML = ''
 
 }
@@ -419,7 +416,7 @@ function carouselAnimation(flag, params) {
   } else if (flag === 'navYear') {
     toolLeftOBJ.innerHTML = year;
   }
-  if ( !newArr.includes(String(yy)) || flag === 'cnt') {
+  if (!newArr.includes(String(yy)) || flag === 'cnt') {
     switch (flag) {
       case 'cnt':
         showContent(yy, mo, params.action)
