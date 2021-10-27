@@ -18,9 +18,8 @@ let navObj = document.getElementsByClassName('nav')[0]
 // 工具栏左侧的的日期对象
 let toolLeftOBJ = document.getElementsByClassName("toolLeft")[0];
 
-// 日历初始化函数
 /**
- * 
+ * 日历初始化函数
  * @param {Boolean} drag 判断是否开启拖拽 true为开启 flase为关闭
  */
 function init(drag = true) {
@@ -169,9 +168,8 @@ function showTools() {
 
 }
 
-// 展示content区域
 /**
- * 
+ * 展示content区域
  * @param {Number} y 需要渲染的年
  * @param {Number} m 需要渲染的月
  * @param {String} order 向上渲染还是向下渲染
