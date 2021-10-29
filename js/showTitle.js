@@ -9,7 +9,8 @@ import {
     showContent
 } from './showContent.js'
 import {
-    slideshowObj,
+    setMo,
+    setYy,
     toolLeftOBJ
 } from './index.js'
 // 展示title区域
@@ -46,6 +47,8 @@ export function showTitle() {
         let str = e.target.innerHTML
         let currentY = Number(str.substr(0, 4))
         let currentM = Number(str.substr(5, 2))
+        setYy(currentY)
+        setMo(currentM)
         cutContent()
         showContent(currentY, currentM, '');
         toolLeftOBJ.innerHTML = currentY + '年' + currentM + '月'
