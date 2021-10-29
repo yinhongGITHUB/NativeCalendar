@@ -13,8 +13,10 @@ import {
   navMo,
   navYy,
   toolLeftOBJ,
-  slideshowObj 
 } from '../js/index.js'
+import {
+  restoreBottomUp
+} from '../common/carouselAnimation.js'
 import {
   showContent
 } from './showContent.js'
@@ -93,6 +95,8 @@ export function showNav(flag, order) {
           removeCnt()
           showContent(getYy(), getMo(), '');
         }
+        // 只要导航被点击，不论是年导航还是月导航，清空样式bottom
+        restoreBottomUp()
       }
       tr.appendChild(td);
     }

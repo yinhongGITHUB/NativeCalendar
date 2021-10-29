@@ -30,9 +30,7 @@ export function carouselAnimation(flag, params) {
   } else if (flag === 'navMonth') {
     toolLeftOBJ.innerHTML = getYy() + "年";
   } else if (flag === 'navYear') {
-    console.log(getYy());
     toolLeftOBJ.innerHTML = year;
-    console.log("进来了",year);
   }
 
   let whether = !newArr.includes(toolLeftOBJ.innerHTML)
@@ -54,6 +52,7 @@ export function carouselAnimation(flag, params) {
   if (params.action === 'down' && whether) { // down的时候，给他初始值 up的时候不给初始值
     bottomUp += params.bottomUp
   }
+
   let TimeID = setInterval(() => {
     if (params.action === 'up') {
       bottomUp -= 2
@@ -66,5 +65,5 @@ export function carouselAnimation(flag, params) {
       clearInterval(TimeID)
       count = 0
     }
-  }, 1);
+  }, 1000);
 }

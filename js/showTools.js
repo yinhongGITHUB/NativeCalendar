@@ -70,7 +70,6 @@ export function showTools() {
                 'showObj': navShowObj,
                 'time': 304,
             })
-           
         } else { // 说明这里是选年的
             setYy(getYy()-10);
             carouselAnimation('navYear', {
