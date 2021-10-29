@@ -34,6 +34,7 @@ export function showTools() {
         if (str[str.length - 1] === "月") { // 说明这里是选月的导航
             toolLeftOBJ.innerHTML = getYy() + "年";
             document.getElementsByClassName("slideHeight")[0].style.display = "none"
+            removeNav()
             showNav('月');
         } else if (str[str.length - 1] === "年") { // 说明这里是选年的导航
             toolLeftOBJ.innerHTML =
@@ -93,9 +94,9 @@ export function showTools() {
             }
             carouselAnimation('cnt', {
                 'action': 'down',
-                'bottomUp': -278,
+                'bottomUp': -276,
                 'showObj': slideshowObj,
-                'time': 278,
+                'time': 276,
             })
         } else if (str[str.length - 1] === "年") { // 说明这里是选月的
             setYy(getYy()+1)

@@ -4,6 +4,10 @@
 import {
   navShowObj
 } from '../js/index.js'
+import {
+  restoreBottomUp
+} from './carouselAnimation.js'
 export function removeNav() {
+  restoreBottomUp()
   navShowObj.innerHTML = ''
 }

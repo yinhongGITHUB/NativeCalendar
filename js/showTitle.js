@@ -9,9 +9,6 @@ import {
     showContent
 } from './showContent.js'
 import {
-    removeTbody
-} from '../common/removeTbody.js'
-import {
     slideshowObj,
     toolLeftOBJ
 } from './index.js'
@@ -51,7 +48,6 @@ export function showTitle() {
         let currentM = Number(str.substr(5, 2))
         cutContent()
         showContent(currentY, currentM, '');
-        // removeTbody('', slideshowObj.childNodes)
         toolLeftOBJ.innerHTML = currentY + '年' + currentM + '月'
     }
     let timeID = setInterval(() => {

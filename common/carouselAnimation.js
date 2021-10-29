@@ -12,13 +12,13 @@ import {
   showContent
 } from '../js/showContent.js'
 import {
-  removeTbody
-} from './removeTbody.js'
-import {
   showNav
 } from '../js/showNav.js'
 let bottomUp = 0,
   count = 0
+export function restoreBottomUp() {
+  bottomUp = 0
+}
 export function carouselAnimation(flag, params) {
   let newArr = [],
     year = (getYy() + "").substr(0, 3) + 0 + "-" + (getYy() + "").substr(0, 3) + 9;
@@ -34,7 +34,6 @@ export function carouselAnimation(flag, params) {
   }
 
   let whether = !newArr.includes(toolLeftOBJ.innerHTML)
-  console.log(whether, newArr,toolLeftOBJ.innerHTML);
   if (whether) {
     switch (flag) {
       case 'cnt':
@@ -50,11 +49,9 @@ export function carouselAnimation(flag, params) {
         break;
     }
   }
-  // removeTbody(params.action, params.showObj.childNodes)
-  if (params.action === 'down' && whether) {// down的时候，给他初始值 up的时候不给初始值
+  if (params.action === 'down' && whether) { // down的时候，给他初始值 up的时候不给初始值
     bottomUp += params.bottomUp
   }
-
   let TimeID = setInterval(() => {
     if (params.action === 'up') {
       bottomUp -= 2
@@ -63,7 +60,7 @@ export function carouselAnimation(flag, params) {
     }
     count += 2
     params.showObj.style.bottom = bottomUp + 'px'
-    if (count > params.time) {
+    if (count >= params.time) {
       clearInterval(TimeID)
       count = 0
     }
