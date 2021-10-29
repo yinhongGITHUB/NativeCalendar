@@ -30,7 +30,9 @@ export function carouselAnimation(flag, params) {
   } else if (flag === 'navMonth') {
     toolLeftOBJ.innerHTML = getYy() + "年";
   } else if (flag === 'navYear') {
+    console.log(getYy());
     toolLeftOBJ.innerHTML = year;
+    console.log("进来了",year);
   }
 
   let whether = !newArr.includes(toolLeftOBJ.innerHTML)

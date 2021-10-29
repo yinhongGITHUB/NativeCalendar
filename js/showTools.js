@@ -72,7 +72,7 @@ export function showTools() {
             })
            
         } else { // 说明这里是选年的
-            setYy(getYy()-8);
+            setYy(getYy()-10);
             carouselAnimation('navYear', {
                 'action': 'up',
                 'bottomUp': 0,
@@ -107,7 +107,7 @@ export function showTools() {
                 'time': 304,
             })
         } else { // 说明这里是选年的
-            setYy(getYy()+8)
+            setYy(getYy()+10)
             carouselAnimation('navYear', {
                 'action': 'down',
                 'bottomUp': -304,
