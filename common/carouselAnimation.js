@@ -65,5 +65,5 @@ export function carouselAnimation(flag, params) {
       clearInterval(TimeID)
       count = 0
     }
-  }, 1000);
+  }, 1);
 }
