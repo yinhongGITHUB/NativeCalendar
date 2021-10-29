@@ -12,11 +12,15 @@ import {
   setMo,
   navMo,
   navYy,
-  toolLeftOBJ
+  toolLeftOBJ,
+  slideshowObj 
 } from '../js/index.js'
 import {
   showContent
 } from './showContent.js'
+import {
+  removeCnt
+} from '../common/removeCnt.js'
 export function showNav(flag, order) {
   navObj.style.display = ''
   let cnt = document.getElementsByClassName("content")[0]
@@ -77,7 +81,7 @@ export function showNav(flag, order) {
         toolLeftOBJ.innerHTML = navTitle + (len === 4 ? '年' : '')
         let content = len === 4 ? '年' : '月'
         if (content === '年') { // 如果当前点击的导航的文本显示的是年，那就应该显示月的导航了
-          document.getElementsByClassName("navshow")[0].childNodes[0]?.remove()
+          navShowObj.childNodes[0]?.remove()
           showNav('月')
         } else if (content === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
           toolLeftOBJ.innerHTML = getYy() + "年" + getMo() + "月";
@@ -85,6 +89,8 @@ export function showNav(flag, order) {
           // 显示日期而且得把里面存在的tbody移除掉
           document.getElementsByClassName("slideHeight")[0].style.display = ""
           cnt.style.display = ""
+          //每次切换显示之前先清空
+          removeCnt()
           showContent(getYy(), getMo(), '');
         }
       }

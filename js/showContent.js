@@ -10,14 +10,16 @@ import {
 import {
     navObj,
     today,
-    slideshowObj 
+    slideshowObj,
+    toolLeftOBJ
 } from './index.js'
 export function showContent(y, m, order) {
+
     // 每次进来，根据传入的年月，生成对应的工具栏
     showTools();
     // 每次日历更新，都是新建一个tbody
     let cnt = document.createElement("tbody");
-    cnt.id = m
+    cnt.id = toolLeftOBJ.innerHTML
     cnt.style.display = ""
     navObj.style.display = 'none'
     //根据当前需要显示的年和月来创建日历

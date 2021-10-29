@@ -62,7 +62,6 @@ export function showTools() {
                 'time': 276,
             })
         } else if (str[str.length - 1] === "年") { // 说明这里是选月的
-            console.log("进来了");
             setYy(getYy()-1);
             carouselAnimation('navMonth', {
                 'action': 'up',
@@ -70,6 +69,7 @@ export function showTools() {
                 'showObj': navShowObj,
                 'time': 304,
             })
+           
         } else { // 说明这里是选年的
             setYy(getYy()-8);
             carouselAnimation('navYear', {
@@ -79,7 +79,6 @@ export function showTools() {
                 'time': 304,
             })
         }
-       
     };
     toolRight2OBJ.onclick = function () {
         if (!throttle(1000)) return;
@@ -96,7 +95,7 @@ export function showTools() {
                 'action': 'down',
                 'bottomUp': -278,
                 'showObj': slideshowObj,
-                'time': 276,
+                'time': 278,
             })
         } else if (str[str.length - 1] === "年") { // 说明这里是选月的
             setYy(getYy()+1)
@@ -105,7 +104,6 @@ export function showTools() {
                 'bottomUp': -304,
                 'showObj': navShowObj,
                 'time': 304,
-             
             })
         } else { // 说明这里是选年的
             setYy(getYy()+8)
@@ -116,6 +114,6 @@ export function showTools() {
                 'time': 304,         
             })
         }
-         
+     
     };
 }

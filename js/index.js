@@ -58,5 +58,4 @@ export function init(drag = true) {
   // 是否开启日历拖拽功能
   if (drag) dragCalendar()
 }
-init()
 

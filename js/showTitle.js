@@ -51,7 +51,7 @@ export function showTitle() {
         let currentM = Number(str.substr(5, 2))
         cutContent()
         showContent(currentY, currentM, '');
-        removeTbody('', slideshowObj.childNodes)
+        // removeTbody('', slideshowObj.childNodes)
         toolLeftOBJ.innerHTML = currentY + '年' + currentM + '月'
     }
     let timeID = setInterval(() => {
