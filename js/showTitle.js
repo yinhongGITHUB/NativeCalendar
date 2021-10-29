@@ -12,7 +12,8 @@ import {
     removeTbody
 } from '../common/removeTbody.js'
 import {
-    slideshowObj
+    slideshowObj,
+    toolLeftOBJ
 } from './index.js'
 // 展示title区域
 export function showTitle() {
@@ -51,6 +52,7 @@ export function showTitle() {
         cutContent()
         showContent(currentY, currentM, '');
         removeTbody('', slideshowObj.childNodes)
+        toolLeftOBJ.innerHTML = currentY + '年' + currentM + '月'
     }
     let timeID = setInterval(() => {
         showTitle()
