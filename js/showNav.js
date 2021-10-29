@@ -8,10 +8,15 @@ import {
   navShowObj,
   getYy,
   setYy,
+  getMo,
+  setMo,
   navMo,
   navYy,
   toolLeftOBJ
 } from '../js/index.js'
+import {
+  showContent
+} from './showContent.js'
 export function showNav(flag, order) {
   navObj.style.display = ''
   let cnt = document.getElementsByClassName("content")[0]
@@ -65,9 +70,9 @@ export function showNav(flag, order) {
         let navTitle = e.target.innerHTML // 当前点击导航的文本  也就是  是几月是几几年
         let len = navTitle.length
         if (len === 4) { // 说明当前点的是年
-          getYy() = navTitle
+          setYy(navTitle)
         } else if (navTitle[len - 1] === '月') { // 说明当前点的月
-          mo = Number(navTitle.substr(0, len - 1))
+          setMo(Number(navTitle.substr(0, len - 1)))
         }
         toolLeftOBJ.innerHTML = navTitle + (len === 4 ? '年' : '')
         let content = len === 4 ? '年' : '月'
@@ -75,12 +80,12 @@ export function showNav(flag, order) {
           document.getElementsByClassName("navshow")[0].childNodes[0]?.remove()
           showNav('月')
         } else if (content === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
-          toolLeftOBJ.innerHTML = getYy() + "年" + mo + "月";
+          toolLeftOBJ.innerHTML = getYy() + "年" + getMo() + "月";
           navObj.style.display = 'none'
           // 显示日期而且得把里面存在的tbody移除掉
           document.getElementsByClassName("slideHeight")[0].style.display = ""
           cnt.style.display = ""
-          showContent(getYy(), mo, '');
+          showContent(getYy(), getMo(), '');
         }
       }
       tr.appendChild(td);
