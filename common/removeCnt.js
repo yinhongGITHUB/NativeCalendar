@@ -6,8 +6,9 @@ import {
 } from '../js/index.js'
 import {
     restoreBottomUp
-  } from './carouselAnimation.js'
-export function removeCnt() {
+} from './carouselAnimation.js'
+export function removeCnt(showObj) {
     restoreBottomUp()
+    showObj.style.bottom = 0 + 'px'
     slideshowObj.innerHTML = ''
 }

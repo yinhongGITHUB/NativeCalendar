@@ -17,6 +17,7 @@ import {
 let bottomUp = 0,
   count = 0
 export function restoreBottomUp() {
+  console.log("进来了");
   bottomUp = 0
 }
 export function carouselAnimation(flag, params) {
@@ -51,6 +52,7 @@ export function carouselAnimation(flag, params) {
   }
   if (params.action === 'down' && whether) { // down的时候，给他初始值 up的时候不给初始值
     bottomUp += params.bottomUp
+    console.log("赋初始值了吗",bottomUp);
   }
 
   let TimeID = setInterval(() => {

@@ -13,6 +13,7 @@ import {
   navMo,
   navYy,
   toolLeftOBJ,
+  slideshowObj
 } from '../js/index.js'
 import {
   restoreBottomUp
@@ -92,7 +93,7 @@ export function showNav(flag, order) {
           document.getElementsByClassName("slideHeight")[0].style.display = ""
           cnt.style.display = ""
           //每次切换显示之前先清空
-          removeCnt()
+          removeCnt(slideshowObj)
           showContent(getYy(), getMo(), '');
         }
         // 只要导航被点击，不论是年导航还是月导航，清空样式bottom
