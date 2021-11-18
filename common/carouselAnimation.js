@@ -14,10 +14,8 @@ import {
 import {
   showNav
 } from '../js/showNav.js'
-let bottomUp = 0,
-  count = 0
+let bottomUp = 0
 export function restoreBottomUp() {
-  console.log("进来了");
   bottomUp = 0
 }
 export function carouselAnimation(flag, params) {
@@ -50,22 +48,27 @@ export function carouselAnimation(flag, params) {
         break;
     }
   }
-  if (params.action === 'down' && whether) { // down的时候，给他初始值 up的时候不给初始值
+  // css3的写法
+  // 获取当前的bottom====>带单位的
+  let bottom = getComputedStyle(params.showObj).bottom
+  // 去单位
+  bottomUp = Number(bottom.substr(0, bottom.length - 2))
+  if (params.action === 'down' && whether) {
+    //说明此时的情况是  在下面添加  同时向上滚
+    // 1.先退一步，再往前走
+    params.showObj.style.bottom = -(params.bottomUp) + 'px'
+    setTimeout(() => {
+      // 2.动态给css3属性
+      params.showObj.style.transition = 'all 1s'
+      params.showObj.style.bottom = 0 + 'px'
+    }, 10);
+    setTimeout(() => {
+      // 3.动画结束后 再把css3属性去除，（利用无transition属性时，给bottom时那一瞬间的页面变化，骗过人类的眼睛）
+      params.showObj.style.transition = ''
+    }, 1000);
+  } else {
+    params.showObj.style.transition = 'all 1s'
     bottomUp += params.bottomUp
-    console.log("赋初始值了吗",bottomUp);
-  }
-
-  let TimeID = setInterval(() => {
-    if (params.action === 'up') {
-      bottomUp -= 2
-    } else if (params.action === 'down') {
-      bottomUp += 2
-    }
-    count += 2
     params.showObj.style.bottom = bottomUp + 'px'
-    if (count >= params.time) {
-      clearInterval(TimeID)
-      count = 0
-    }
-  }, 1);
+  }
 }

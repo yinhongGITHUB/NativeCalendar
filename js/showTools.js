@@ -51,32 +51,29 @@ export function showTools() {
         // 这里我要判断当前是选日还是选月还是选年
         if (str[str.length - 1] === "月") { // 说明这里是选日的
             if (getMo() > 1) {
-                setMo(getMo()-1)
+                setMo(getMo() - 1)
             } else {
                 setMo(12)
-                setYy(getYy()-1)
+                setYy(getYy() - 1)
             }
             carouselAnimation('cnt', {
                 'action': 'up',
-                'bottomUp': 0,
+                'bottomUp': -276,
                 'showObj': slideshowObj,
-                'time': 276,
             })
         } else if (str[str.length - 1] === "年") { // 说明这里是选月的
-            setYy(getYy()-1);
+            setYy(getYy() - 1);
             carouselAnimation('navMonth', {
                 'action': 'up',
-                'bottomUp': 0,
+                'bottomUp': -304,
                 'showObj': navShowObj,
-                'time': 304,
             })
         } else { // 说明这里是选年的
-            setYy(getYy()-10);
+            setYy(getYy() - 10);
             carouselAnimation('navYear', {
                 'action': 'up',
-                'bottomUp': 0,
+                'bottomUp': -304,
                 'showObj': navShowObj,
-                'time': 304,
             })
         }
     };
@@ -86,34 +83,31 @@ export function showTools() {
         // 这里我要判断当前是选日还是选月还是选年
         if (str[str.length - 1] === "月") { // 说明这里是选日的
             if (getMo() < 12) {
-                setMo(getMo()+1);
+                setMo(getMo() + 1);
             } else {
                 setMo(1);
-                setYy(getYy()+1);
+                setYy(getYy() + 1);
             }
             carouselAnimation('cnt', {
                 'action': 'down',
-                'bottomUp': -276,
+                'bottomUp': 276,
                 'showObj': slideshowObj,
-                'time': 276,
             })
         } else if (str[str.length - 1] === "年") { // 说明这里是选月的
-            setYy(getYy()+1)
+            setYy(getYy() + 1)
             carouselAnimation('navMonth', {
                 'action': 'down',
-                'bottomUp': -304,
+                'bottomUp': 304,
                 'showObj': navShowObj,
-                'time': 304,
             })
         } else { // 说明这里是选年的
-            setYy(getYy()+10)
+            setYy(getYy() + 10)
             carouselAnimation('navYear', {
                 'action': 'down',
-                'bottomUp': -304,
+                'bottomUp': 304,
                 'showObj': navShowObj,
-                'time': 304,         
             })
         }
-     
+
     };
 }

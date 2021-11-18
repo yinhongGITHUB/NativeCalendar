@@ -24,6 +24,9 @@ import {
 import {
   removeCnt
 } from '../common/removeCnt.js'
+import {
+  removeNav
+} from '../common/removeNav.js'
 export function showNav(flag, order) {
   navObj.style.display = ''
   let cnt = document.getElementsByClassName("content")[0]
@@ -84,7 +87,8 @@ export function showNav(flag, order) {
         toolLeftOBJ.innerHTML = navTitle + (len === 4 ? '年' : '')
         let content = len === 4 ? '年' : '月'
         if (content === '年') { // 如果当前点击的导航的文本显示的是年，那就应该显示月的导航了
-          navShowObj.childNodes[0]?.remove()
+          console.log("进来了？");
+          removeNav()
           showNav('月')
         } else if (content === '月') { // 如果当前点击的导航的文本显示的是月，那说明要展示日了
           toolLeftOBJ.innerHTML = getYy() + "年" + getMo() + "月";
