@@ -59,15 +59,15 @@ export function carouselAnimation(flag, params) {
     params.showObj.style.bottom = -(params.bottomUp) + 'px'
     setTimeout(() => {
       // 2.动态给css3属性
-      params.showObj.style.transition = 'all 1s'
+      params.showObj.style.transition = 'bottom 1s'
       params.showObj.style.bottom = 0 + 'px'
-    }, 10);
-    setTimeout(() => {
+    }, 1);
+    params.showObj.addEventListener("transitionend", () => {
       // 3.动画结束后 再把css3属性去除，（利用无transition属性时，给bottom时那一瞬间的页面变化，骗过人类的眼睛）
       params.showObj.style.transition = ''
-    }, 1000);
+    }, false)
   } else {
-    params.showObj.style.transition = 'all 1s'
+    params.showObj.style.transition = 'bottom 1s'
     bottomUp += params.bottomUp
     params.showObj.style.bottom = bottomUp + 'px'
   }
