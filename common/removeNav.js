@@ -11,5 +11,4 @@ export function removeNav() {
   navShowObj.style.transition = ''
   restoreBottomUp()
   navShowObj.innerHTML = ''
-  console.log(navShowObj);
 }
