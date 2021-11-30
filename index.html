@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>基于源生js的windows日历</title>
 
-    <link rel="stylesheet" href="./css/index.css" />
-  </head>
-  <body>
-    <div id="box">
-      <!-- title区域 -->
-      <div class="title">
-        <div class="titleTime"></div>
-        <div class="titleData"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于源生js的windows日历</title>
+
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <div id="box">
+    <!-- title区域 -->
+    <div class="title">
+      <div class="titleTime"></div>
+      <div class="titleData"></div>
+    </div>
+    <!--  tool区域  -->
+    <div class="tools">
+      <div class="left">
+        <span class="toolLeft"></span>
       </div>
-      <!--  tool区域  -->
-      <div class="tools">
-        <div class="left">
-          <span class="toolLeft"></span>
+      <div class="right">
+        <div class="toolRight1">
+          <span class="toolRight1Span"></span>
         </div>
-        <div class="right">
-          <span class="toolRight1"></span>
-          <span class="toolRight2"></span>
+        <div class="toolRight2">
+          <span class="toolRight2Span"></span>
         </div>
-      </div>
-      <!-- content区域 -->
-      <table class="content">
-        <thead>
-          <tr class="head">
-            <th>一</th>
-            <th>二</th>
-            <th>三</th>
-            <th>四</th>
-            <th>五</th>
-            <th>六</th>
-            <th>日</th>
-          </tr>
-        </thead>
-      </table>
-      <div class="slideHeight">
-        <div class="slideshow"></div>
-      </div>
-      <!-- navigation区域 -->
-      <div class="nav">
-        <div class="navshow"></div>
       </div>
     </div>
+    <!-- content区域 -->
+    <table class="content">
+      <thead>
+        <tr class="head">
+          <th>一</th>
+          <th>二</th>
+          <th>三</th>
+          <th>四</th>
+          <th>五</th>
+          <th>六</th>
+          <th>日</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="slideHeight">
+      <div class="slideshow"></div>
+    </div>
+    <!-- navigation区域 -->
+    <div class="nav">
+      <div class="navshow"></div>
+    </div>
+  </div>
 
-    <script type="module" src="./calendar.js"></script>
-  </body>
+  <script type="module" src="./calendar.js"></script>
+</body>
+
 </html>
