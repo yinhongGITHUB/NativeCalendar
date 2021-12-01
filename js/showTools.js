@@ -40,7 +40,7 @@ export function showTools() {
 
   // 绑定点击事件
   toolRight1OBJ.onclick = function () {
-    if (!throttle(500)) return;
+    if (!throttle(150)) return;
     let str = toolLeftOBJ.innerHTML;
     // 这里我要判断当前是选日还是选月还是选年
     if (str[str.length - 1] === "月") {
@@ -75,7 +75,7 @@ export function showTools() {
     }
   };
   toolRight2OBJ.onclick = function () {
-    if (!throttle(500)) return;
+    if (!throttle(150)) return;
     let str = toolLeftOBJ.innerHTML;
     // 这里我要判断当前是选日还是选月还是选年
     if (str[str.length - 1] === "月") {

@@ -52,7 +52,7 @@ export function carouselAnimation(flag, params) {
     params.showObj.style.bottom = -params.bottomUp + "px";
     setTimeout(() => {
       // 2.动态给css3属性
-      params.showObj.style.transition = "bottom 500ms ease-in";
+      params.showObj.style.transition = "bottom 150ms ease-in";
       params.showObj.style.bottom = 0 + "px";
     }, 1);
     params.showObj.addEventListener(
@@ -64,7 +64,7 @@ export function carouselAnimation(flag, params) {
       false
     );
   } else {
-    params.showObj.style.transition = "bottom 500ms ease-in";
+    params.showObj.style.transition = "bottom 150ms ease-in";
     bottomUp += params.bottomUp;
     params.showObj.style.bottom = bottomUp + "px";
   }
